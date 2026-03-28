@@ -26,4 +26,6 @@ class Server
     public const DEFAULT4 = 'default4';
 
     public const DEFAULT5 = 'default5';
+
+    public const DEFAULT6 = 'default6';
 }

@@ -113,4 +113,5 @@ The gateway for the SDK. This class acts as a factory for the Apis and also hold
 | getVerifyV2ServiceApi() | Gets VerifyV2ServiceApi |
 | getVerifyV2VerificationApi() | Gets VerifyV2VerificationApi |
 | getVerifyV2VerificationCheckApi() | Gets VerifyV2VerificationCheckApi |
+| getSmsApi() | Gets SmsApi |
 

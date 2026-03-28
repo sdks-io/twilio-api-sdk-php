@@ -41,6 +41,7 @@ use TwilioApIsLib\Apis\NotifyV1BindingApi;
 use TwilioApIsLib\Apis\NotifyV1CredentialApi;
 use TwilioApIsLib\Apis\NotifyV1NotificationApi;
 use TwilioApIsLib\Apis\NotifyV1ServiceApi;
+use TwilioApIsLib\Apis\SmsApi;
 use TwilioApIsLib\Apis\TaskrouterV1ActivityApi;
 use TwilioApIsLib\Apis\TaskrouterV1EventApi;
 use TwilioApIsLib\Apis\TaskrouterV1TaskApi;
@@ -198,6 +199,8 @@ class TwilioApIsClient implements ConfigurationInterface
 
     private $verifyV2VerificationCheck;
 
+    private $sms;
+
     private $basicAuthManager;
 
     private $loggingConfigurationBuilder;
@@ -230,7 +233,7 @@ class TwilioApIsClient implements ConfigurationInterface
             ->converter(new CompatibilityConverter())
             ->jsonHelper(ApiHelper::getJsonHelper())
             ->apiCallback($this->config['httpCallback'] ?? null)
-            ->userAgent('PHP-SDK/1.0.0 (OS: {os-info}, Engine: {engine}/{engine-version})')
+            ->userAgent('PHP-SDK/1.0.1 (OS: {os-info}, Engine: {engine}/{engine-version})')
             ->serverUrls(self::ENVIRONMENT_MAP[$this->getEnvironment()], Server::DEFAULT_)
             ->authManagers(['accountSid_authToken' => $this->basicAuthManager])
             ->loggingConfiguration($loggingConfiguration)
@@ -1068,6 +1071,17 @@ class TwilioApIsClient implements ConfigurationInterface
     }
 
     /**
+     * Returns Sms Api
+     */
+    public function getSmsApi(): SmsApi
+    {
+        if ($this->sms == null) {
+            $this->sms = new SmsApi($this->client);
+        }
+        return $this->sms;
+    }
+
+    /**
      * A map of all base urls used in different environments and servers
      *
      * @var array
@@ -1079,7 +1093,8 @@ class TwilioApIsClient implements ConfigurationInterface
             Server::DEFAULT2 => 'https://conversations.twilio.com',
             Server::DEFAULT3 => 'https://notify.twilio.com',
             Server::DEFAULT4 => 'https://taskrouter.twilio.com',
-            Server::DEFAULT5 => 'https://verify.twilio.com'
+            Server::DEFAULT5 => 'https://verify.twilio.com',
+            Server::DEFAULT6 => 'https://api.twilio.com'
         ]
     ];
 }

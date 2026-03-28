@@ -15,19 +15,21 @@ use Exception;
 use stdClass;
 
 /**
- * Risk_check overrides Fraud Prevention measures like Fraud Guard, Geo Permissions etc per
- * verification attempt basis, allowing Verify to block traffic considered fraudulent if enabled or
- * bypass active protections if disabled. Can be: `enable`(default) or `disable`. For SMS channel only.,
- * Include this parameter with a value of `disable` to skip any kind of risk check on the respective
- * message request.
+ * The direction of the message. Can be: `inbound` for incoming messages, `outbound-api` for messages
+ * created by the REST API, `outbound-call` for messages created during a call, or `outbound-reply` for
+ * messages created in response to an incoming message.
  */
-class VerificationEnumRiskCheck
+class MessageEnumDirection
 {
-    public const ENABLE = 'enable';
+    public const INBOUND = 'inbound';
 
-    public const DISABLE = 'disable';
+    public const OUTBOUNDAPI = 'outbound-api';
 
-    private const _ALL_VALUES = [self::ENABLE, self::DISABLE];
+    public const OUTBOUNDCALL = 'outbound-call';
+
+    public const OUTBOUNDREPLY = 'outbound-reply';
+
+    private const _ALL_VALUES = [self::INBOUND, self::OUTBOUNDAPI, self::OUTBOUNDCALL, self::OUTBOUNDREPLY];
 
     /**
      * Ensures that all the given values are present in this Enum.
@@ -44,6 +46,6 @@ class VerificationEnumRiskCheck
         if (CoreHelper::checkValueOrValuesInList($value, self::_ALL_VALUES)) {
             return $value;
         }
-        throw new Exception("$value is invalid for VerificationEnumRiskCheck.");
+        throw new Exception("$value is invalid for MessageEnumDirection.");
     }
 }

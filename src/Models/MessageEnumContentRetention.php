@@ -15,19 +15,15 @@ use Exception;
 use stdClass;
 
 /**
- * Risk_check overrides Fraud Prevention measures like Fraud Guard, Geo Permissions etc per
- * verification attempt basis, allowing Verify to block traffic considered fraudulent if enabled or
- * bypass active protections if disabled. Can be: `enable`(default) or `disable`. For SMS channel only.,
- * Include this parameter with a value of `disable` to skip any kind of risk check on the respective
- * message request.
+ * Determines if the message content can be stored or redacted based on privacy settings
  */
-class VerificationEnumRiskCheck
+class MessageEnumContentRetention
 {
-    public const ENABLE = 'enable';
+    public const RETAIN = 'retain';
 
-    public const DISABLE = 'disable';
+    public const DISCARD = 'discard';
 
-    private const _ALL_VALUES = [self::ENABLE, self::DISABLE];
+    private const _ALL_VALUES = [self::RETAIN, self::DISCARD];
 
     /**
      * Ensures that all the given values are present in this Enum.
@@ -44,6 +40,6 @@ class VerificationEnumRiskCheck
         if (CoreHelper::checkValueOrValuesInList($value, self::_ALL_VALUES)) {
             return $value;
         }
-        throw new Exception("$value is invalid for VerificationEnumRiskCheck.");
+        throw new Exception("$value is invalid for MessageEnumContentRetention.");
     }
 }
